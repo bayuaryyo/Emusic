@@ -270,6 +270,7 @@ function clearSearchInput() {
         searchInput.focus();
     }
     if (searchClear) searchClear.style.display = 'none';
+    if (heroBanner) heroBanner.classList.remove('searching');
 }
 
 function focusSearchInput() {
@@ -292,6 +293,7 @@ function doSearch(overrideQuery) {
     const query = overrideQuery || (searchInput ? searchInput.value.trim() : '');
     if (!query) return;
 
+    if (heroBanner) heroBanner.classList.add('searching');
     if (resultsCount) resultsCount.textContent = "Mencari...";
     renderSkeletons();
 
@@ -932,6 +934,7 @@ function switchMainTab(tabName) {
     if (sideBtn) sideBtn.classList.add('active');
 
     if (tabName === 'home') {
+        if (heroBanner) heroBanner.classList.remove('searching');
         const scroll = document.getElementById('content-scroll');
         if (scroll) scroll.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (tabName === 'search') {

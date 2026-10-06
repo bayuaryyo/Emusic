@@ -1380,34 +1380,228 @@ a {
         border-radius: 0;
     }
 
+    /* COMPACT MOBILE TOPBAR */
     .spotify-topbar {
-        padding: 0 16px;
-        height: 56px;
+        padding: 8px 12px;
+        height: 52px;
+        gap: 8px;
     }
 
     .topbar-arrows {
         display: none;
     }
 
+    .topbar-search-wrap {
+        flex: 1;
+        max-width: 100%;
+        gap: 6px;
+    }
+
+    .search-box-input {
+        height: 38px;
+        font-size: 13.5px;
+        padding: 0 32px 0 34px;
+    }
+
+    .search-box-icon {
+        left: 10px;
+        width: 15px;
+        height: 15px;
+    }
+
+    .btn-spotify-search {
+        height: 38px;
+        padding: 0 14px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .topbar-right {
+        gap: 6px;
+    }
+
+    .status-pill {
+        padding: 4px 8px;
+        gap: 5px;
+    }
+
+    .status-label {
+        display: none; /* Sembunyikan teks label di mobile agar hemat ruang */
+    }
+
+    .topbar-icon-btn {
+        width: 34px;
+        height: 34px;
+    }
+
+    /* COMPACT HERO BANNER ON MOBILE */
     .spotify-hero-banner {
-        padding: 24px 16px 16px 16px;
+        padding: 12px 14px 8px 14px;
+        transition: all 0.3s ease;
+    }
+
+    .spotify-hero-banner.searching {
+        display: none !important; /* Otomatis tersembunyi saat mencari lagu agar hasil langsung terlihat di atas */
+    }
+
+    .hero-badge {
+        display: none;
     }
 
     .hero-title {
-        font-size: 26px;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        margin-bottom: 2px;
     }
 
+    .hero-subtitle {
+        display: none; /* Sembunyikan subtitle panjang di mobile */
+    }
+
+    .spotify-mode-tabs {
+        margin-bottom: 10px;
+        padding: 2px;
+    }
+
+    .mode-tab-btn {
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+
+    .mode-tab-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* TRENDING CHIPS HORIZONTAL SCROLL (1 BARIS BERSIH) */
+    .trending-chips-row {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 6px;
+    }
+
+    .trending-chips-row::-webkit-scrollbar {
+        display: none;
+    }
+
+    .trending-label {
+        display: none;
+    }
+
+    .trending-pill {
+        flex-shrink: 0;
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+
+    /* COMPACT SPOTIFY TRACK LIST ON MOBILE (BUKAN KARTU KOTAK RAKSASA) */
     .spotify-section {
-        padding: 12px 16px 90px 16px;
+        padding: 8px 12px 120px 12px;
+    }
+
+    .section-title-row {
+        margin-bottom: 10px;
+    }
+
+    .section-heading {
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+    }
+
+    .section-badge {
+        font-size: 12px;
     }
 
     .spotify-cards-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 3px !important;
+    }
+
+    .spotify-card {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 6px 8px !important;
+        background-color: transparent !important;
+        border-radius: 8px !important;
+        width: 100% !important;
+        min-height: 54px !important;
+        cursor: pointer;
+        transition: background-color 0.15s ease !important;
+    }
+
+    .spotify-card:hover,
+    .spotify-card:active {
+        background-color: var(--bg-surface-hover) !important;
+        transform: none !important;
+    }
+
+    .card-art-box {
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        aspect-ratio: 1/1 !important;
+        margin-bottom: 0 !important;
+        border-radius: 4px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+        flex-shrink: 0;
+    }
+
+    .card-cover-img {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 4px !important;
+    }
+
+    .card-title-text {
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        color: var(--text-base) !important;
+        margin-bottom: 2px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    .card-artist-text {
+        font-size: 12px !important;
+        color: var(--text-subdued) !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
     }
 
     .card-floating-play {
-        display: none; /* Touch users tap card directly */
+        display: none !important;
+    }
+
+    /* SKELETON COMPACT LIST ON MOBILE */
+    .spotify-card.skeleton {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 6px 8px !important;
+        height: 54px !important;
+    }
+
+    .spotify-card.skeleton .card-art-box {
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        margin-bottom: 0 !important;
+    }
+
+    .spotify-card.skeleton .skeleton-line {
+        height: 12px !important;
+        margin-bottom: 4px !important;
     }
 
     /* 4. MOBILE FLOATING MINI PLAYER */
