@@ -223,17 +223,18 @@ function connectWS() {
 }
 
 function handleWsEvent(data) {
-    const action = data.action;
+    const action = data.action || data.t;
 
-    if (action === 'search_results') {
-        renderSearchResults(data.results || [], data.query || '');
-    } else if (action === 'song_info') {
+    if (action === 'search_results' || action === 'search') {
+        const list = data.list || data.results || [];
+        renderSearchResults(list, data.q || data.query || '');
+    } else if (action === 'song_ready' || action === 'song_info') {
         playTrackData(data);
-    } else if (action === 'video_info') {
+    } else if (action === 'video_ready' || action === 'video_info') {
         playVideoData(data);
     } else if (action === 'lyrics') {
         handleLyricsResponse(data.lyrics);
-    } else if (action === 'error') {
+    } else if (action === 'error' || action === 'song_error') {
         showToast(data.message || 'Gagal memproses lagu');
         if (islandDot) islandDot.className = "status-dot";
     }
@@ -300,7 +301,8 @@ function doSearch(overrideQuery) {
         fetch(apiUrl(`/api/search?q=${encodeURIComponent(query)}`))
             .then(res => res.json())
             .then(data => {
-                renderSearchResults(data.results || [], query);
+                const list = data.list || data.results || [];
+                renderSearchResults(list, query);
             })
             .catch(() => {
                 showToast("Gagal melakukan pencarian");
@@ -343,7 +345,7 @@ function renderSearchResults(items, query) {
 
     let html = '';
     items.forEach((item, index) => {
-        const thumb = item.thumbnail || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&q=80';
+        const thumb = item.b64 || item.thumb || item.thumbnail || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&q=80';
         const title = escapeHtml(item.title || 'Untitled');
         const artist = escapeHtml(item.artist || item.channel || 'Artis');
 
@@ -391,15 +393,15 @@ function selectPlayTrack(index) {
     saveToLibrary(item);
 
     if (activeMode === 'video') {
-        requestVideo(ytId);
+        requestVideo(ytId, item.title, item.artist);
     } else {
-        requestSong(ytId);
+        requestSong(ytId, item.title, item.artist);
     }
 }
 
-function requestSong(id) {
+function requestSong(id, title, artist) {
     if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ action: "get_song", id: id }));
+        ws.send(JSON.stringify({ action: "get_song", id: id, title: title || "", artist: artist || "" }));
     } else {
         fetch(apiUrl(`/api/song?id=${encodeURIComponent(id)}`))
             .then(res => res.json())
@@ -408,9 +410,9 @@ function requestSong(id) {
     }
 }
 
-function requestVideo(id) {
+function requestVideo(id, title, artist) {
     if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ action: "get_video", id: id }));
+        ws.send(JSON.stringify({ action: "get_video", id: id, title: title || "", artist: artist || "" }));
     } else {
         fetch(apiUrl(`/api/video?id=${encodeURIComponent(id)}`))
             .then(res => res.json())
@@ -466,7 +468,7 @@ function playVideoData(data) {
 }
 
 function updateTrackDisplay(item) {
-    const thumb = item.thumbnail || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&q=80';
+    const thumb = item.b64 || item.thumb || item.thumbnail || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&q=80';
     const title = item.title || 'Pilih Lagu';
     const artist = item.artist || item.channel || 'Escanor Stream';
 
@@ -875,7 +877,7 @@ function renderLibraryList(filter = 'all') {
 
     let html = '';
     items.forEach(item => {
-        const thumb = item.thumbnail || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&q=80';
+        const thumb = item.b64 || item.thumb || item.thumbnail || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&q=80';
         html += `
         <div class="library-item" onclick="requestSongById('${item.id}', '${escapeHtml(item.title)}')">
             <img class="library-item-thumb" src="${thumb}" alt="thumb">

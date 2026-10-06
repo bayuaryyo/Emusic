@@ -748,11 +748,12 @@ async def search_handler(request):
     """Endpoint HTTP search untuk pencarian video instan"""
     query = request.query.get('q', '').strip()
     if not query:
-        return web.json_response({"list": []}, headers={'Access-Control-Allow-Origin': '*'})
+        return web.json_response({"list": [], "results": []}, headers={'Access-Control-Allow-Origin': '*'})
     results = await asyncio.to_thread(search_youtube, query)
     return web.json_response({
         "q": query,
-        "list": results[:12]
+        "list": results[:12],
+        "results": results[:12]
     }, headers={
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, OPTIONS',
