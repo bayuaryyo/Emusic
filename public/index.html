@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Escanor Stream • Music & Video Player</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- AMBIENT LIQUID MESH ORBS -->
+    <div class="ambient-mesh">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- TOP NAVBAR -->
+    <header>
+        <a href="/" class="brand-group">
+            <div class="app-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            </div>
+            <div class="brand-text">
+                Escanor
+                <span class="brand-badge">AirPlay</span>
+            </div>
+        </a>
+
+        <div class="header-controls">
+            <!-- IPHONE DYNAMIC ISLAND STATUS -->
+            <div class="dynamic-island" id="island-trigger" onclick="focusPlayer()">
+                <div class="island-dot" id="island-dot"></div>
+                <div class="sound-wave" id="island-wave">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+                <span class="island-title" id="island-status">Menghubungkan...</span>
+            </div>
+
+            <!-- THEME TOGGLE BUTTON -->
+            <button class="theme-toggle-btn" id="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">
+                <svg id="icon-sun" class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg id="icon-moon" class="theme-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN BODY -->
+    <main>
+        <!-- SEARCH CARD (GLASSMORPHISM SPOTLIGHT) -->
+        <section class="glass-search-card">
+            <h1 class="search-headline">Putar Musik & Video</h1>
+            <p class="search-subtitle">Cari lagu favorit atau tempel URL YouTube langsung dengan kualitas audio murni.</p>
+
+            <div class="spotlight-wrap">
+                <div class="spotlight-input-box">
+                    <svg class="spotlight-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="search-input" class="spotlight-input" placeholder="Cari judul lagu, artis, atau paste link YouTube..." autocomplete="off">
+                </div>
+                <button class="btn-spotlight" id="btn-search" onclick="doSearch()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <span>Cari</span>
+                </button>
+            </div>
+
+            <!-- QUICK CHIPS (NO EMOJIS) -->
+            <div class="quick-chips-bar">
+                <span class="quick-label">Trending:</span>
+                <div class="glass-pill" onclick="quickSearch('Rayuan Perempuan Gila')">Rayuan Perempuan Gila</div>
+                <div class="glass-pill" onclick="quickSearch('Komang Raim Laode')">Komang</div>
+                <div class="glass-pill" onclick="quickSearch('Alan Walker Faded')">Alan Walker - Faded</div>
+                <div class="glass-pill" onclick="quickSearch('Die With A Smile Lady Gaga Bruno Mars')">Die With A Smile</div>
+                <div class="glass-pill" onclick="quickSearch('Sial Mahalini')">Sial - Mahalini</div>
+            </div>
+        </section>
+
+        <!-- IOS SEGMENTED CONTROL -->
+        <div class="ios-segmented-control">
+            <button class="segment-btn active" id="tab-music" onclick="setMode('music')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                Mode Audio
+            </button>
+            <button class="segment-btn" id="tab-video" onclick="setMode('video')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19C21.35 6.31 20.69 5.65 19.81 5.42C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.88.23-1.54.89-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.88.89 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.88-.23 1.54-.89 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>
+                Mode Video
+            </button>
+        </div>
+
+        <!-- VIDEO PLAYER VIEW -->
+        <div id="video-container-view">
+            <div class="video-player-frame">
+                <video id="video-player" controls playsinline></video>
+            </div>
+            <div class="video-meta-block">
+                <h3 id="video-title" style="font-size:18px; font-weight:700; margin-bottom:4px;">Judul Video</h3>
+                <p id="video-artist" style="color:var(--text-secondary); font-size:14px;">Artis / Channel</p>
+            </div>
+        </div>
+
+        <!-- RESULTS SECTION -->
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">Hasil Pencarian</h2>
+                <span class="section-meta" id="results-count"></span>
+            </div>
+
+            <div class="cards-grid" id="results-grid">
+                <div class="empty-glass-box">
+                    <p style="font-size:16px; margin-bottom:6px; font-weight:600;">Belum ada lagu yang dicari</p>
+                    <p style="font-size:13px; color:var(--text-tertiary);">Ketik judul lagu di atas atau pilih salah satu rekomendasi untuk mulai memutar.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SPOTIFY-STYLE ANIMATED LIVE LYRICS SHEET -->
+    <div id="lyrics-sheet">
+        <div class="lyrics-header">
+            <div class="lyrics-badge-title">Lirik Lagu</div>
+            <button class="lyrics-close-btn" onclick="toggleLyrics()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="lyrics-scroll-container" id="lyrics-scroll">
+            <div id="lyrics-content-list">
+                <div style="color:var(--text-tertiary); padding:20px; text-align:center;">Memuat lirik...</div>
+            </div>
+        </div>
+    </div>    <!-- FLOATING APPLE MUSIC CAPSULE PILL DOCK (NOW PLAYING) -->
+    <div class="floating-dock-player" id="dock-player">
+        <!-- 1. LEFT PLAYBACK CONTROLS -->
+        <div class="dock-controls-left">
+            <!-- Shuffle -->
+            <button class="dock-btn-glyph" id="btn-shuffle" onclick="toggleShuffle()" title="Acak Lagu">
+                <svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.45 20 9.5V4h-5.5zm.33 9.42l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.05-3.13-3.13z"/></svg>
+            </button>
+
+            <!-- Previous Track / Rewind 10s (Double Triangles Left) -->
+            <button class="dock-btn-glyph" id="btn-prev" onclick="handlePrevBtn()" title="Sebelumnya / Mundur 10 detik">
+                <svg viewBox="0 0 24 24"><polygon points="11,18 2,12 11,6"/><polygon points="22,18 13,12 22,6"/></svg>
+            </button>
+
+            <!-- Play / Pause (Solid Triangle / Double Bars) -->
+            <button class="dock-btn-glyph dock-btn-play" id="btn-play-toggle" onclick="togglePlayPause()" title="Putar / Jeda">
+                <svg id="icon-play" viewBox="0 0 24 24"><polygon points="7,4 20,12 7,20"/></svg>
+                <svg id="icon-pause" viewBox="0 0 24 24" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1.5"/><rect x="14" y="4" width="4" height="16" rx="1.5"/></svg>
+            </button>
+
+            <!-- Next Track / Forward 10s (Double Triangles Right) -->
+            <button class="dock-btn-glyph" id="btn-next" onclick="handleNextBtn()" title="Selanjutnya / Maju 10 detik">
+                <svg viewBox="0 0 24 24"><polygon points="13,18 22,12 13,6"/><polygon points="2,18 11,12 2,6"/></svg>
+            </button>
+
+            <!-- Repeat / Loop -->
+            <button class="dock-btn-glyph" id="btn-repeat" onclick="toggleRepeat()" title="Ulangi Lagu">
+                <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+            </button>
+        </div>
+
+        <!-- 2. CENTER TRACK CAPSULE & UNDERLINE SCRUBBER -->
+        <div class="dock-track-center">
+            <img id="dock-thumb" class="dock-thumb-art" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&q=80" alt="Album Art">
+            
+            <div class="dock-meta-scrub">
+                <div class="dock-text-row">
+                    <span class="dock-title-text" id="dock-title">Pilih Lagu</span>
+                    <span class="dock-separator">—</span>
+                    <span class="dock-artist-text" id="dock-artist">Escanor Stream</span>
+                </div>
+                
+                <!-- Underline timeline scrubber -->
+                <div class="dock-inline-scrub" id="dock-scrub-bar" onclick="handleSeek(event)" onmousemove="updateScrubTooltip(event)" onmouseleave="hideScrubTooltip()">
+                    <div class="dock-inline-fill" id="dock-scrub-fill">
+                        <div class="dock-scrub-knob"></div>
+                    </div>
+                    <div class="dock-time-pill" id="dock-time-pill">
+                        <span id="time-current">0:00</span> / <span id="time-total">0:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PREVIEW BADGE -->
+            <span class="dock-badge-pill" id="dock-badge">PREVIEW</span>
+
+            <!-- MORE OPTIONS THREE DOTS -->
+            <div class="dock-more-wrap">
+                <button class="dock-btn-glyph dock-btn-dots" id="btn-more-options" onclick="toggleOptionsMenu(event)" title="Pilihan Lain">
+                    <svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+                </button>
+
+                <!-- CONTEXT POPUP MENU -->
+                <div class="dock-menu-dropdown" id="dock-menu-dropdown">
+                    <div class="dock-menu-item" onclick="toggleLyrics(); closeOptionsMenu();">
+                        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                        <span>Tampilkan Lirik</span>
+                    </div>
+                    <div class="dock-menu-item" onclick="toggleRepeat(); closeOptionsMenu();">
+                        <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+                        <span id="opt-repeat-label">Ulangi: Mati</span>
+                    </div>
+                    <div class="dock-menu-item" onclick="downloadCurrentSong(); closeOptionsMenu();">
+                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                        <span>Download Musik</span>
+                    </div>
+                    <div class="dock-menu-item" onclick="copySongInfo(); closeOptionsMenu();">
+                        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                        <span>Salin Judul</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. RIGHT TOOLS -->
+        <div class="dock-tools-right">
+            <!-- Queue / Lyrics Button (3 lines with dots) -->
+            <button class="dock-btn-glyph" id="btn-lyrics" onclick="toggleLyrics()" title="Daftar Lirik / Antrean">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="4" cy="6" r="1.5"/>
+                    <rect x="8" y="5" width="13" height="2" rx="1"/>
+                    <circle cx="4" cy="12" r="1.5"/>
+                    <rect x="8" y="11" width="13" height="2" rx="1"/>
+                    <circle cx="4" cy="18" r="1.5"/>
+                    <rect x="8" y="17" width="13" height="2" rx="1"/>
+                </svg>
+            </button>
+
+            <!-- Volume Button & Smooth Expand Slider -->
+            <div class="dock-vol-cluster">
+                <button class="dock-btn-glyph" id="btn-volume-mute" onclick="toggleMute()" title="Volume">
+                    <svg id="icon-vol-high" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                    <svg id="icon-vol-mute" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27l4.73 4.73H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                </button>
+                <div class="dock-vol-slider-wrap">
+                    <input type="range" class="dock-vol-slider" id="vol-slider" min="0" max="1" step="0.02" value="1" oninput="handleVolume(this.value)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NATIVE AUDIO ELEMENT -->
+    <audio id="native-audio" preload="auto"></audio>
+
+    <!-- CLEAN TOAST (NO EMOJIS) -->
+    <div id="ios-toast"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

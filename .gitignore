@@ -1,0 +1,20 @@
+# Credentials & sensitive configs (JANGAN SAMPAI TERUPLOAD)
+.vscode/
+*.json.secret
+.env
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.local/
+.cache/
+
+# Media temporary files
+temp_videos/
+*.mp4
+*.mp3
+
+# OS files
+.DS_Store
+Thumbs.db
