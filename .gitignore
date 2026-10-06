@@ -18,3 +18,6 @@ temp_videos/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Scrape / asset dumps
+open.spotify.com/

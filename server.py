@@ -881,6 +881,8 @@ os.makedirs("temp_videos", exist_ok=True)
 app.router.add_static('/video/', path='./temp_videos/', name='video')
 if os.path.exists('./public'):
     app.router.add_static('/public/', path='./public/', name='public')
+if os.path.exists('./public/fonts'):
+    app.router.add_static('/fonts/', path='./public/fonts/', name='fonts')
 
 app.router.add_get('/', index_handler)
 app.router.add_get('/style.css', style_handler)

@@ -1,252 +1,415 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="light">
+<html lang="id" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Escanor Stream • Music & Video Player</title>
+    <title>Spotify • Escanor Stream</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231ed760'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.58 14.42c-.18.3-.57.4-.87.21-2.38-1.46-5.38-1.79-8.91-.98-.34.08-.68-.14-.76-.48-.08-.34.14-.68.48-.76 3.87-.88 7.18-.51 9.85 1.14.3.19.4.58.21.87zm1.22-2.73c-.23.38-.72.5-1.1.27-2.73-1.68-6.89-2.16-10.12-1.18-.42.13-.87-.11-1-.53-.13-.42.11-.87.53-1 3.69-1.12 8.28-.58 11.42 1.34.38.23.5.72.27 1.1zm.11-2.84C14.64 8.87 9.24 8.7 6.1 9.65c-.5.15-1.04-.14-1.19-.64-.15-.5.14-1.04.64-1.19 3.62-1.1 9.58-.9 13.33 1.33.45.27.6.86.33 1.31-.27.45-.86.6-1.31.33z'/></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- AMBIENT LIQUID MESH ORBS -->
-    <div class="ambient-mesh">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
+    <!-- SPOTIFY APP CONTAINER (DESKTOP GRID / MOBILE ADAPTIVE) -->
+    <div class="spotify-app" id="spotify-app">
 
-    <!-- TOP NAVBAR -->
-    <header>
-        <a href="/" class="brand-group">
-            <div class="app-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-            </div>
-            <div class="brand-text">
-                Escanor
-                <span class="brand-badge">AirPlay</span>
-            </div>
-        </a>
-
-        <div class="header-controls">
-            <!-- IPHONE DYNAMIC ISLAND STATUS -->
-            <div class="dynamic-island" id="island-trigger" onclick="focusPlayer()">
-                <div class="island-dot" id="island-dot"></div>
-                <div class="sound-wave" id="island-wave">
-                    <span></span><span></span><span></span><span></span>
-                </div>
-                <span class="island-title" id="island-status">Menghubungkan...</span>
+        <!-- 1. LEFT SIDEBAR (DESKTOP) -->
+        <aside class="spotify-sidebar" id="spotify-sidebar">
+            <!-- BRAND LOGO -->
+            <div class="sidebar-brand-box">
+                <a href="/" class="brand-link">
+                    <svg class="brand-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.58 14.42c-.18.3-.57.4-.87.21-2.38-1.46-5.38-1.79-8.91-.98-.34.08-.68-.14-.76-.48-.08-.34.14-.68.48-.76 3.87-.88 7.18-.51 9.85 1.14.3.19.4.58.21.87zm1.22-2.73c-.23.38-.72.5-1.1.27-2.73-1.68-6.89-2.16-10.12-1.18-.42.13-.87-.11-1-.53-.13-.42.11-.87.53-1 3.69-1.12 8.28-.58 11.42 1.34.38.23.5.72.27 1.1zm.11-2.84C14.64 8.87 9.24 8.7 6.1 9.65c-.5.15-1.04-.14-1.19-.64-.15-.5.14-1.04.64-1.19 3.62-1.1 9.58-.9 13.33 1.33.45.27.6.86.33 1.31-.27.45-.86.6-1.31.33z"/>
+                    </svg>
+                    <span class="brand-name">Escanor<span class="brand-highlight">Stream</span></span>
+                </a>
             </div>
 
-            <!-- THEME TOGGLE BUTTON -->
-            <button class="theme-toggle-btn" id="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">
-                <svg id="icon-sun" class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-                <svg id="icon-moon" class="theme-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            </button>
-        </div>
-    </header>
-
-    <!-- MAIN BODY -->
-    <main>
-        <!-- SEARCH CARD (GLASSMORPHISM SPOTLIGHT) -->
-        <section class="glass-search-card">
-            <h1 class="search-headline">Putar Musik & Video</h1>
-            <p class="search-subtitle">Cari lagu favorit atau tempel URL YouTube langsung dengan kualitas audio murni.</p>
-
-            <div class="spotlight-wrap">
-                <div class="spotlight-input-box">
-                    <svg class="spotlight-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input type="text" id="search-input" class="spotlight-input" placeholder="Cari judul lagu, artis, atau paste link YouTube..." autocomplete="off">
-                </div>
-                <button class="btn-spotlight" id="btn-search" onclick="doSearch()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <!-- PRIMARY NAVIGATION -->
+            <nav class="sidebar-nav">
+                <button class="nav-item active" id="side-nav-home" onclick="switchMainTab('home')">
+                    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    <span>Beranda</span>
+                </button>
+                <button class="nav-item" id="side-nav-search" onclick="focusSearchInput()">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
                     <span>Cari</span>
                 </button>
-            </div>
+            </nav>
 
-            <!-- QUICK CHIPS (NO EMOJIS) -->
-            <div class="quick-chips-bar">
-                <span class="quick-label">Trending:</span>
-                <div class="glass-pill" onclick="quickSearch('Rayuan Perempuan Gila')">Rayuan Perempuan Gila</div>
-                <div class="glass-pill" onclick="quickSearch('Komang Raim Laode')">Komang</div>
-                <div class="glass-pill" onclick="quickSearch('Alan Walker Faded')">Alan Walker - Faded</div>
-                <div class="glass-pill" onclick="quickSearch('Die With A Smile Lady Gaga Bruno Mars')">Die With A Smile</div>
-                <div class="glass-pill" onclick="quickSearch('Sial Mahalini')">Sial - Mahalini</div>
-            </div>
-        </section>
-
-        <!-- IOS SEGMENTED CONTROL -->
-        <div class="ios-segmented-control">
-            <button class="segment-btn active" id="tab-music" onclick="setMode('music')">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-                Mode Audio
-            </button>
-            <button class="segment-btn" id="tab-video" onclick="setMode('video')">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 7.19C21.35 6.31 20.69 5.65 19.81 5.42C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.88.23-1.54.89-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.88.89 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.88-.23 1.54-.89 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>
-                Mode Video
-            </button>
-        </div>
-
-        <!-- VIDEO PLAYER VIEW -->
-        <div id="video-container-view">
-            <div class="video-player-frame">
-                <video id="video-player" controls playsinline></video>
-            </div>
-            <div class="video-meta-block">
-                <h3 id="video-title" style="font-size:18px; font-weight:700; margin-bottom:4px;">Judul Video</h3>
-                <p id="video-artist" style="color:var(--text-secondary); font-size:14px;">Artis / Channel</p>
-            </div>
-        </div>
-
-        <!-- RESULTS SECTION -->
-        <section>
-            <div class="section-header">
-                <h2 class="section-title">Hasil Pencarian</h2>
-                <span class="section-meta" id="results-count"></span>
-            </div>
-
-            <div class="cards-grid" id="results-grid">
-                <div class="empty-glass-box">
-                    <p style="font-size:16px; margin-bottom:6px; font-weight:600;">Belum ada lagu yang dicari</p>
-                    <p style="font-size:13px; color:var(--text-tertiary);">Ketik judul lagu di atas atau pilih salah satu rekomendasi untuk mulai memutar.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- SPOTIFY-STYLE ANIMATED LIVE LYRICS SHEET -->
-    <div id="lyrics-sheet">
-        <div class="lyrics-header">
-            <div class="lyrics-badge-title">Lirik Lagu</div>
-            <button class="lyrics-close-btn" onclick="toggleLyrics()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-        </div>
-        <div class="lyrics-scroll-container" id="lyrics-scroll">
-            <div id="lyrics-content-list">
-                <div style="color:var(--text-tertiary); padding:20px; text-align:center;">Memuat lirik...</div>
-            </div>
-        </div>
-    </div>    <!-- FLOATING APPLE MUSIC CAPSULE PILL DOCK (NOW PLAYING) -->
-    <div class="floating-dock-player" id="dock-player">
-        <!-- 1. LEFT PLAYBACK CONTROLS -->
-        <div class="dock-controls-left">
-            <!-- Shuffle -->
-            <button class="dock-btn-glyph" id="btn-shuffle" onclick="toggleShuffle()" title="Acak Lagu">
-                <svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.45 20 9.5V4h-5.5zm.33 9.42l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.05-3.13-3.13z"/></svg>
-            </button>
-
-            <!-- Previous Track / Rewind 10s (Double Triangles Left) -->
-            <button class="dock-btn-glyph" id="btn-prev" onclick="handlePrevBtn()" title="Sebelumnya / Mundur 10 detik">
-                <svg viewBox="0 0 24 24"><polygon points="11,18 2,12 11,6"/><polygon points="22,18 13,12 22,6"/></svg>
-            </button>
-
-            <!-- Play / Pause (Solid Triangle / Double Bars) -->
-            <button class="dock-btn-glyph dock-btn-play" id="btn-play-toggle" onclick="togglePlayPause()" title="Putar / Jeda">
-                <svg id="icon-play" viewBox="0 0 24 24"><polygon points="7,4 20,12 7,20"/></svg>
-                <svg id="icon-pause" viewBox="0 0 24 24" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1.5"/><rect x="14" y="4" width="4" height="16" rx="1.5"/></svg>
-            </button>
-
-            <!-- Next Track / Forward 10s (Double Triangles Right) -->
-            <button class="dock-btn-glyph" id="btn-next" onclick="handleNextBtn()" title="Selanjutnya / Maju 10 detik">
-                <svg viewBox="0 0 24 24"><polygon points="13,18 22,12 13,6"/><polygon points="2,18 11,12 2,6"/></svg>
-            </button>
-
-            <!-- Repeat / Loop -->
-            <button class="dock-btn-glyph" id="btn-repeat" onclick="toggleRepeat()" title="Ulangi Lagu">
-                <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
-            </button>
-        </div>
-
-        <!-- 2. CENTER TRACK CAPSULE & UNDERLINE SCRUBBER -->
-        <div class="dock-track-center">
-            <img id="dock-thumb" class="dock-thumb-art" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&q=80" alt="Album Art">
-            
-            <div class="dock-meta-scrub">
-                <div class="dock-text-row">
-                    <span class="dock-title-text" id="dock-title">Pilih Lagu</span>
-                    <span class="dock-separator">—</span>
-                    <span class="dock-artist-text" id="dock-artist">Escanor Stream</span>
-                </div>
-                
-                <!-- Underline timeline scrubber -->
-                <div class="dock-inline-scrub" id="dock-scrub-bar" onclick="handleSeek(event)" onmousemove="updateScrubTooltip(event)" onmouseleave="hideScrubTooltip()">
-                    <div class="dock-inline-fill" id="dock-scrub-fill">
-                        <div class="dock-scrub-knob"></div>
+            <!-- YOUR LIBRARY CARD (KOLEKSI KAMU) -->
+            <div class="sidebar-library-panel">
+                <div class="library-header">
+                    <div class="library-title-group" onclick="switchMainTab('library')">
+                        <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+                        <span>Koleksi Kamu</span>
                     </div>
-                    <div class="dock-time-pill" id="dock-time-pill">
-                        <span id="time-current">0:00</span> / <span id="time-total">0:00</span>
+                    <button class="library-action-btn" onclick="clearLibraryHistory()" title="Bersihkan Riwayat">
+                        <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                    </button>
+                </div>
+
+                <!-- FILTER TAGS -->
+                <div class="library-chips">
+                    <button class="chip active" onclick="filterLibrary('all')">Semua</button>
+                    <button class="chip" onclick="filterLibrary('likes')">Disukai</button>
+                    <button class="chip" onclick="filterLibrary('recent')">Riwayat</button>
+                </div>
+
+                <!-- SCROLLABLE LIBRARY ITEMS -->
+                <div class="library-list" id="library-list">
+                    <div class="library-empty">
+                        <p>Belum ada riwayat lagu.</p>
+                        <small>Lagu yang kamu putar akan tersimpan di sini.</small>
                     </div>
                 </div>
             </div>
+        </aside>
 
-            <!-- PREVIEW BADGE -->
-            <span class="dock-badge-pill" id="dock-badge">PREVIEW</span>
+        <!-- 2. MAIN VIEWPORT (HEADER + CONTENT) -->
+        <div class="spotify-main-viewport" id="main-viewport">
 
-            <!-- MORE OPTIONS THREE DOTS -->
-            <div class="dock-more-wrap">
-                <button class="dock-btn-glyph dock-btn-dots" id="btn-more-options" onclick="toggleOptionsMenu(event)" title="Pilihan Lain">
-                    <svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+            <!-- TOP STICKY BAR -->
+            <header class="spotify-topbar">
+                <!-- NAV HISTORY BUTTONS -->
+                <div class="topbar-arrows">
+                    <button class="arrow-btn" onclick="history.back()" title="Kembali">
+                        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                    </button>
+                    <button class="arrow-btn" onclick="history.forward()" title="Maju">
+                        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                    </button>
+                </div>
+
+                <!-- SEARCH PILL BAR -->
+                <div class="topbar-search-wrap">
+                    <div class="spotify-search-box">
+                        <svg class="search-box-icon" viewBox="0 0 24 24">
+                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                        <input type="text" id="search-input" class="search-box-input" placeholder="Mau dengarkan lagu apa hari ini?" autocomplete="off">
+                        <button class="search-clear-btn" id="search-clear" onclick="clearSearchInput()" style="display:none;">
+                            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                        </button>
+                    </div>
+                    <button class="btn-spotify-search" id="btn-search" onclick="doSearch()">Cari</button>
+                </div>
+
+                <!-- RIGHT CONTROLS -->
+                <div class="topbar-right">
+                    <!-- SERVER DYNAMIC ISLAND STATUS -->
+                    <div class="status-pill" id="island-trigger" onclick="focusPlayer()" title="Status Escanor Server">
+                        <div class="status-dot" id="island-dot"></div>
+                        <div class="status-wave" id="island-wave">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <span class="status-label" id="island-status">Menghubungkan...</span>
+                    </div>
+
+                    <!-- THEME TOGGLE (DARK SPOTIFY / LIGHT) -->
+                    <button class="topbar-icon-btn" id="theme-toggle" onclick="toggleTheme()" title="Ganti Mode">
+                        <svg id="icon-sun" class="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                        <svg id="icon-moon" class="theme-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- SCROLLABLE PAGE BODY -->
+            <main class="spotify-content-scroll" id="content-scroll">
+
+                <!-- HERO AMBIENT GRADIENT HEADER -->
+                <section class="spotify-hero-banner" id="hero-banner">
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content">
+                        <div class="hero-badge">SPOTIFY WEB EXPERIENCE</div>
+                        <h1 class="hero-title" id="greeting-text">Selamat Datang</h1>
+                        <p class="hero-subtitle">Streaming ribuan lagu dan video kualitas HD tanpa jeda.</p>
+
+                        <!-- MODE TOGGLE (AUDIO / VIDEO) -->
+                        <div class="spotify-mode-tabs">
+                            <button class="mode-tab-btn active" id="tab-music" onclick="setMode('music')">
+                                <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                                <span>Musik</span>
+                            </button>
+                            <button class="mode-tab-btn" id="tab-video" onclick="setMode('video')">
+                                <svg viewBox="0 0 24 24"><path d="M21.58 7.19C21.35 6.31 20.69 5.65 19.81 5.42C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.88.23-1.54.89-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.88.89 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.88-.23 1.54-.89 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3L10 15z"/></svg>
+                                <span>Video</span>
+                            </button>
+                        </div>
+
+                        <!-- QUICK TRENDING PILLS -->
+                        <div class="trending-chips-row">
+                            <span class="trending-label">Trending:</span>
+                            <button class="trending-pill" onclick="quickSearch('Rayuan Perempuan Gila')">Rayuan Perempuan Gila</button>
+                            <button class="trending-pill" onclick="quickSearch('Komang Raim Laode')">Komang</button>
+                            <button class="trending-pill" onclick="quickSearch('Die With A Smile Bruno Mars Lady Gaga')">Die With A Smile</button>
+                            <button class="trending-pill" onclick="quickSearch('Sial Mahalini')">Sial Mahalini</button>
+                            <button class="trending-pill" onclick="quickSearch('Alan Walker Faded')">Faded</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIDEO CINEMA VIEW (JIKA MODE VIDEO AKTIF) -->
+                <section class="spotify-video-cinema" id="video-container-view" style="display:none;">
+                    <div class="video-cinema-inner">
+                        <video id="video-player" controls playsinline></video>
+                    </div>
+                    <div class="video-cinema-meta">
+                        <h2 id="video-title" class="video-title-text">Judul Video</h2>
+                        <p id="video-artist" class="video-artist-text">Channel YouTube</p>
+                    </div>
+                </section>
+
+                <!-- SECTION: RESULTS / RECENT PICKS -->
+                <section class="spotify-section">
+                    <div class="section-title-row">
+                        <h2 class="section-heading" id="section-heading-text">Lagu Rekomendasi</h2>
+                        <span class="section-badge" id="results-count">Top Hits</span>
+                    </div>
+
+                    <!-- SPOTIFY CARDS GRID -->
+                    <div class="spotify-cards-grid" id="results-grid">
+                        <!-- Loaded dynamically via JavaScript -->
+                        <div class="spotify-card skeleton">
+                            <div class="card-art-box"><div class="skeleton-box"></div></div>
+                            <div class="skeleton-line" style="width:80%"></div>
+                            <div class="skeleton-line" style="width:50%"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SPOTIFY GIANT LIVE LYRICS VIEW (OVERLAY / MODAL) -->
+                <div class="spotify-lyrics-overlay" id="lyrics-sheet">
+                    <div class="lyrics-overlay-top">
+                        <div class="lyrics-track-info">
+                            <img id="lyrics-cover-art" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&q=80" alt="Cover">
+                            <div>
+                                <h3 id="lyrics-song-title">Judul Lagu</h3>
+                                <p id="lyrics-song-artist">Nama Artis</p>
+                            </div>
+                        </div>
+                        <button class="lyrics-close-btn" onclick="toggleLyrics()" title="Tutup Lirik">
+                            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                        </button>
+                    </div>
+                    <div class="lyrics-scroll-body" id="lyrics-scroll">
+                        <div id="lyrics-content-list" class="lyrics-lines-wrapper">
+                            <div class="lyrics-placeholder">Lirik akan muncul saat lagu diputar.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
+        <!-- 3. SPOTIFY BOTTOM NOW PLAYING BAR (DESKTOP) -->
+        <footer class="spotify-player-bar" id="dock-player">
+            <!-- 3A. LEFT: TRACK INFO & LIKE -->
+            <div class="player-left-group">
+                <img id="dock-thumb" class="player-cover-art" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&q=80" alt="Cover" onclick="openMobilePlayer()">
+                <div class="player-text-meta">
+                    <div class="player-title" id="dock-title">Pilih Lagu</div>
+                    <div class="player-artist" id="dock-artist">Escanor Stream</div>
+                </div>
+                <button class="player-btn-like" id="btn-like" onclick="toggleLikeCurrentSong()" title="Simpan ke Koleksi">
+                    <svg class="heart-icon" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
                 </button>
+            </div>
 
-                <!-- CONTEXT POPUP MENU -->
-                <div class="dock-menu-dropdown" id="dock-menu-dropdown">
-                    <div class="dock-menu-item" onclick="toggleLyrics(); closeOptionsMenu();">
-                        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-                        <span>Tampilkan Lirik</span>
-                    </div>
-                    <div class="dock-menu-item" onclick="toggleRepeat(); closeOptionsMenu();">
+            <!-- 3B. CENTER: PLAYBACK CONTROLS & TIMELINE SCRUBBER -->
+            <div class="player-center-group">
+                <div class="player-controls-row">
+                    <!-- SHUFFLE -->
+                    <button class="ctrl-btn" id="btn-shuffle" onclick="toggleShuffle()" title="Acak">
+                        <svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.45 20 9.5V4h-5.5zm.33 9.42l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.05-3.13-3.13z"/></svg>
+                    </button>
+                    <!-- PREVIOUS -->
+                    <button class="ctrl-btn" id="btn-prev" onclick="handlePrevBtn()" title="Sebelumnya">
+                        <svg viewBox="0 0 24 24"><polygon points="6,6 6,18 8,18 8,6"/><polygon points="18,6 10,12 18,18"/></svg>
+                    </button>
+                    <!-- BIG CIRCLE PLAY / PAUSE BUTTON -->
+                    <button class="ctrl-btn-play" id="btn-play-toggle" onclick="togglePlayPause()" title="Putar / Jeda">
+                        <svg id="icon-play" viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
+                        <svg id="icon-pause" viewBox="0 0 24 24" style="display:none;"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                    </button>
+                    <!-- NEXT -->
+                    <button class="ctrl-btn" id="btn-next" onclick="handleNextBtn()" title="Berikutnya">
+                        <svg viewBox="0 0 24 24"><polygon points="6,6 14,12 6,18"/><polygon points="16,6 16,18 18,18 18,6"/></svg>
+                    </button>
+                    <!-- REPEAT -->
+                    <button class="ctrl-btn" id="btn-repeat" onclick="toggleRepeat()" title="Ulangi">
                         <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
-                        <span id="opt-repeat-label">Ulangi: Mati</span>
+                    </button>
+                </div>
+
+                <!-- PROGRESS SCRUBBER BAR -->
+                <div class="player-scrubber-row">
+                    <span class="scrub-time" id="time-current">0:00</span>
+                    <div class="scrub-bar-track" id="dock-scrub-bar" onclick="handleSeek(event)">
+                        <div class="scrub-bar-fill" id="dock-scrub-fill">
+                            <div class="scrub-bar-knob"></div>
+                        </div>
                     </div>
-                    <div class="dock-menu-item" onclick="downloadCurrentSong(); closeOptionsMenu();">
-                        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                        <span>Download Musik</span>
-                    </div>
-                    <div class="dock-menu-item" onclick="copySongInfo(); closeOptionsMenu();">
-                        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                        <span>Salin Judul</span>
-                    </div>
+                    <span class="scrub-time" id="time-total">0:00</span>
                 </div>
             </div>
-        </div>
 
-        <!-- 3. RIGHT TOOLS -->
-        <div class="dock-tools-right">
-            <!-- Queue / Lyrics Button (3 lines with dots) -->
-            <button class="dock-btn-glyph" id="btn-lyrics" onclick="toggleLyrics()" title="Daftar Lirik / Antrean">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="4" cy="6" r="1.5"/>
-                    <rect x="8" y="5" width="13" height="2" rx="1"/>
-                    <circle cx="4" cy="12" r="1.5"/>
-                    <rect x="8" y="11" width="13" height="2" rx="1"/>
-                    <circle cx="4" cy="18" r="1.5"/>
-                    <rect x="8" y="17" width="13" height="2" rx="1"/>
-                </svg>
-            </button>
-
-            <!-- Volume Button & Smooth Expand Slider -->
-            <div class="dock-vol-cluster">
-                <button class="dock-btn-glyph" id="btn-volume-mute" onclick="toggleMute()" title="Volume">
-                    <svg id="icon-vol-high" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-                    <svg id="icon-vol-mute" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27l4.73 4.73H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+            <!-- 3C. RIGHT: LYRICS, VOLUME & FULLSCREEN -->
+            <div class="player-right-group">
+                <!-- LYRICS TOGGLE (MIC) -->
+                <button class="ctrl-btn" id="btn-lyrics" onclick="toggleLyrics()" title="Lirik">
+                    <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
                 </button>
-                <div class="dock-vol-slider-wrap">
-                    <input type="range" class="dock-vol-slider" id="vol-slider" min="0" max="1" step="0.02" value="1" oninput="handleVolume(this.value)">
+
+                <!-- VIDEO/MUSIC TOGGLE -->
+                <button class="ctrl-btn" id="btn-switch-video" onclick="toggleVideoModeFromBar()" title="Buka Mode Video">
+                    <svg viewBox="0 0 24 24"><path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H5V6h14v12zm-9-2l6-4-6-4v8z"/></svg>
+                </button>
+
+                <!-- VOLUME CLUSTER -->
+                <div class="volume-cluster">
+                    <button class="ctrl-btn" id="btn-volume-mute" onclick="toggleMute()" title="Volume">
+                        <svg id="icon-vol-high" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                        <svg id="icon-vol-mute" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27l4.73 4.73H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                    </button>
+                    <div class="vol-slider-track" id="vol-track">
+                        <input type="range" class="vol-range" id="vol-slider" min="0" max="1" step="0.01" value="1" oninput="handleVolume(this.value)">
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- 4. SPOTIFY MOBILE MINI PLAYER (FLOATING ABOVE MOBILE NAV) -->
+        <div class="spotify-mobile-mini-player" id="mobile-mini-player" onclick="openMobilePlayer()">
+            <div class="mini-left">
+                <img id="mini-thumb" class="mini-art" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&q=80" alt="Cover">
+                <div class="mini-text">
+                    <span class="mini-title" id="mini-title">Pilih Lagu</span>
+                    <span class="mini-artist" id="mini-artist">Escanor Stream</span>
+                </div>
+            </div>
+            <div class="mini-right" onclick="event.stopPropagation()">
+                <button class="mini-btn-heart" id="mini-btn-like" onclick="toggleLikeCurrentSong()">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </button>
+                <button class="mini-btn-play" id="mini-btn-play" onclick="togglePlayPause()">
+                    <svg id="mini-icon-play" viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
+                    <svg id="mini-icon-pause" viewBox="0 0 24 24" style="display:none;"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                </button>
+            </div>
+            <!-- THIN PROGRESS BAR AT BOTTOM OF MINI PLAYER -->
+            <div class="mini-progress-bar">
+                <div class="mini-progress-fill" id="mini-progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- 5. SPOTIFY MOBILE FULL-SCREEN PLAYER SHEET -->
+        <div class="spotify-mobile-full-player" id="mobile-full-player">
+            <div class="mobile-full-header">
+                <button class="mobile-down-btn" onclick="closeMobilePlayer()">
+                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                </button>
+                <div class="mobile-playing-from">
+                    <span class="mobile-from-label">MEMUTAR DARI HASIL</span>
+                    <span class="mobile-from-name" id="mobile-from-name">Top Hits</span>
+                </div>
+                <button class="mobile-menu-btn" onclick="openSongOptions()">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                </button>
+            </div>
+
+            <!-- GIANT COVER ART -->
+            <div class="mobile-art-wrap">
+                <img id="mobile-full-art" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&q=80" alt="Cover Art">
+            </div>
+
+            <!-- TITLE & ARTIST -->
+            <div class="mobile-meta-row">
+                <div class="mobile-meta-text">
+                    <h2 class="mobile-full-title" id="mobile-full-title">Pilih Lagu</h2>
+                    <p class="mobile-full-artist" id="mobile-full-artist">Escanor Stream</p>
+                </div>
+                <button class="mobile-like-btn" id="mobile-full-like" onclick="toggleLikeCurrentSong()">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </button>
+            </div>
+
+            <!-- SCRUBBER -->
+            <div class="mobile-scrubber-block">
+                <div class="mobile-scrub-track" id="mobile-scrub-track" onclick="handleSeekMobile(event)">
+                    <div class="mobile-scrub-fill" id="mobile-scrub-fill">
+                        <div class="mobile-scrub-knob"></div>
+                    </div>
+                </div>
+                <div class="mobile-time-row">
+                    <span id="mobile-time-current">0:00</span>
+                    <span id="mobile-time-total">0:00</span>
+                </div>
+            </div>
+
+            <!-- FULL CONTROLS ROW -->
+            <div class="mobile-controls-row">
+                <button class="mobile-ctrl-btn" id="mobile-btn-shuffle" onclick="toggleShuffle()">
+                    <svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.45 20 9.5V4h-5.5zm.33 9.42l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.05-3.13-3.13z"/></svg>
+                </button>
+                <button class="mobile-ctrl-btn" id="mobile-btn-prev" onclick="handlePrevBtn()">
+                    <svg viewBox="0 0 24 24"><polygon points="6,6 6,18 8,18 8,6"/><polygon points="18,6 10,12 18,18"/></svg>
+                </button>
+                <button class="mobile-play-btn" id="mobile-btn-play-toggle" onclick="togglePlayPause()">
+                    <svg id="mobile-icon-play" viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
+                    <svg id="mobile-icon-pause" viewBox="0 0 24 24" style="display:none;"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                </button>
+                <button class="mobile-ctrl-btn" id="mobile-btn-next" onclick="handleNextBtn()">
+                    <svg viewBox="0 0 24 24"><polygon points="6,6 14,12 6,18"/><polygon points="16,6 16,18 18,18 18,6"/></svg>
+                </button>
+                <button class="mobile-ctrl-btn" id="mobile-btn-repeat" onclick="toggleRepeat()">
+                    <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+                </button>
+            </div>
+
+            <!-- SPOTIFY LYRICS PREVIEW CARD (MOBILE EXPANDABLE) -->
+            <div class="mobile-lyrics-preview-card" onclick="toggleLyrics()">
+                <div class="card-lyrics-header">
+                    <span>Lirik</span>
+                    <svg viewBox="0 0 24 24"><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/></svg>
+                </div>
+                <div class="card-lyrics-snippet" id="mobile-lyrics-snippet">
+                    Ketuk untuk melihat lirik penuh bernyanyi bersama
                 </div>
             </div>
         </div>
+
+        <!-- 6. SPOTIFY MOBILE BOTTOM NAVIGATION BAR -->
+        <nav class="spotify-mobile-nav" id="mobile-nav-bar">
+            <button class="mob-nav-item active" id="mob-nav-home" onclick="switchMainTab('home')">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span>Beranda</span>
+            </button>
+            <button class="mob-nav-item" id="mob-nav-search" onclick="switchMainTab('search')">
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <span>Cari</span>
+            </button>
+            <button class="mob-nav-item" id="mob-nav-library" onclick="switchMainTab('library')">
+                <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+                <span>Koleksi</span>
+            </button>
+            <button class="mob-nav-item" id="mob-nav-lyrics" onclick="toggleLyrics()">
+                <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
+                <span>Lirik</span>
+            </button>
+        </nav>
+
     </div>
 
-    <!-- NATIVE AUDIO ELEMENT -->
+    <!-- AUDIO ELEMENT & CLEAN TOAST NOTIFICATION -->
     <audio id="native-audio" preload="auto"></audio>
-
-    <!-- CLEAN TOAST (NO EMOJIS) -->
-    <div id="ios-toast"></div>
+    <div id="ios-toast" class="spotify-toast"></div>
 
     <script src="app.js"></script>
 </body>
